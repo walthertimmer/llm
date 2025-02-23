@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="nl"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>VersimpelAI</title> 
+        <style>
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                text-align: center;
+                border: 2px solid #e3f2fd;
+                border-radius: 8px;
+            }
+
+            .header {
+                background-color: #e3f2fd;
+                padding: 20px;
+                margin: -20px -20px 20px -20px;
+                border-radius: 6px 6px 0 0;
+            }
+
+            .header h1 {
+                margin: 0;
+                color: #1976d2;
+            }
+
+            .form-container {
+                margin-top: 30px;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            input, select, button {
+                padding: 8px;
+                margin: 5px;
+            }
+
+            button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            
+            button:hover {
+                background-color: #45a049;
+            }
+            
+            .result-container {
+                margin-top: 30px;
+                text-align: left;
+                max-width: 800px;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .result-container pre {
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                max-width: 100%;
+                margin: 0;
+                padding: 10px;
+                background-color: #f5f5f5;
+                border-radius: 4px;
+            }
+
+            .clear-button {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            
+            .clear-button:hover {
+                background-color: #d32f2f;
+            }
+        </style>
+    </head> 
+    <body> 
+        <div class="container">
+            <div class="header">
+                <h1>VersimpelAI</h1> 
+            </div>
+            <div class="form-container">
+                <p>Upload en transformeer een Word Document naar versimpelde tekst.</p>
+                <form action="/" method="post" enctype="multipart/form-data"> 
+                    <input type="file" name="file" accept=".doc,.docx" required> 
+                    <select name="transformation_type"> 
+                        <option value="versimpel">versimpel</option>
+                        <option value="verengels">verengels</option> 
+                        <option value="samenvatten">samenvatten</option>
+                    </select> 
+                    <button type="submit">uploaden</button> 
+                </form>
+            </div>
+
+        {% if transformed_text %}
+        <div class="result-container">
+            <h2>Resultaat van {{ transformation_type if transformation_type else 'transformatie' }}:</h2>
+            <pre>{{ transformed_text }}</pre>
+            <form action="/" method="get" style="margin-top: 15px;">
+                <button type="submit" class="clear-button">Wis resultaat</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if download_url %}
+        <div class="result-container">
+            <a href="{{ download_url }}">Download Transformed Document</a>
+        </div>
+        {% endif %}
+        </div>
+    </body> 
+</html>
